@@ -3,6 +3,7 @@
 require_once("models/database.php");
 require_once("models/user.php");
 require_once("models/admin.php");
+require_once("models/product.php");
 
 
 
@@ -24,10 +25,8 @@ if ($admin->is_admin($id) == false) {
 // $value = $admin->findLast7DayUser();
 // $value2 = $admin->findLast30daysRevenue();
 
-
-
-
-
+$pro = new Product();
+$most_sold = $pro->mostSoldProduct();
 
 ?>
 
@@ -86,7 +85,7 @@ if ($admin->is_admin($id) == false) {
             <ul>
                 <a class="text-warning" href="admin_dashboard.php">Dashboard</a>
                 <!-- <a class="text-light" href="">Learner</a> -->
-                <a class="text-light" href="admin_order.php">Orders</a>
+                <a class="text-light" href="admin_orders.php">Orders</a>
                 <!-- <a class="text-light" href="">Instructor</a> -->
                 <!-- <a class="text-light" href="">Employer</a> -->
                 <a class="text-light" href="">On Process</a>
@@ -142,7 +141,10 @@ if ($admin->is_admin($id) == false) {
                     <div class="card ">
                         <div class="card mt-3">
                             <h5>Most Sold</h5>
-                            <img src="images/headphone.jpg" alt="">
+                            <hr>
+                            <a href="product_detail.php?product_id=<?php echo $most_sold['product_id'] ?>"><img src="<?php echo $most_sold['photo'] ?>" alt="" width="100%"></a>
+
+
                         </div>
                         <div class="card mt-3">
                             <h5>Most Viewed</h5>

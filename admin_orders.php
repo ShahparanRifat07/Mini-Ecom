@@ -40,6 +40,28 @@ if ($admin->is_admin($id) == false) {
         body {
             background-color: #e0e0e0;
         }
+
+        .container>.card:nth-of-type(1) {
+            border-radius: 0;
+        }
+
+        .container>.card:nth-of-type(1) ul {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 0;
+            margin: 0;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container>.card:nth-of-type(1) ul {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                padding: 0;
+                margin: 0;
+            }
+        }
     </style>
 </head>
 
@@ -52,10 +74,21 @@ if ($admin->is_admin($id) == false) {
 
 
 
-
     <div class="container mt-3 mb-3">
-        <h2 class="mt-5">All Products</h2>
-        <hr>
+
+
+        <div class="card bg-dark mt-3 mb-3">
+            <ul>
+                <a class="text-light" href="admin_dashboard.php">Dashboard</a>
+                <!-- <a class="text-light" href="">Learner</a> -->
+                <a class="text-warning" href="admin_orders.php">Orders</a>
+                <!-- <a class="text-light" href="">Instructor</a> -->
+                <!-- <a class="text-light" href="">Employer</a> -->
+                <a class="text-light" href="">On Process</a>
+                <a class="text-light" href="">Delivered</a>
+            </ul>
+        </div>
+
         <table class="table align-middle mb-5 bg-white">
             <thead class="bg-light">
                 <tr>
@@ -79,7 +112,7 @@ if ($admin->is_admin($id) == false) {
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         $category = $cat->findCategoryById($row['category_id']);
-                        
+
                 ?>
                         <tr>
                             <td>

@@ -194,7 +194,7 @@ if (isset($_SESSION['LOGGEDIN']) && isset($_SESSION['USERID'])) {
               <a class="dropdown-item" href="user_account.php">My Account</a>
             </li>
             <li>
-              <a class="dropdown-item" href="user_order.php">My Orders</a>
+              <a class="dropdown-item" href="my_orders.php">My Orders</a>
             </li>
             <hr>
             <li>

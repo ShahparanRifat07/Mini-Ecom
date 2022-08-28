@@ -4,6 +4,21 @@ class User
 {
 
 
+    function generate_uuid()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0C2f) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0x2Aff),
+            mt_rand(0, 0xffD3),
+            mt_rand(0, 0xff4B)
+        );
+    }
+
     public function valid($data)
     {
         $error = "";
@@ -104,7 +119,7 @@ class User
         if (mysqli_num_rows($result) == 1) {
             $row = mysqli_fetch_assoc($result);
             return $row;
-        }else{
+        } else {
             return null;
         }
     }
@@ -120,6 +135,54 @@ class User
             $row = mysqli_fetch_assoc($result);
             if ($row['is_admin'] == 1) {
                 return true;
+            }
+        }
+    }
+
+    public function checkIfProductBoughtByUser($product_id, $user_id)
+    {
+        $db = new Database();
+        $con = $db->connect_db();
+
+        $query = "SELECT * FROM product_order WHERE user_id='$user_id' AND product_id='$product_id'";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function buyProduct($data, $product_id, $user_id)
+    {
+        $street = $data['street'];
+        $city = $data['city'];
+        $zip = $data['zip'];
+        $country = $data['country'];
+
+        $db = new Database();
+        $con = $db->connect_db();
+
+        $transaction_id = $this->generate_uuid();
+
+        $query = "INSERT INTO product_order ( user_id, product_id, transaction_id, street, city, zip, country)
+            VALUES ('$user_id','$product_id','$transaction_id','$street','$city','$zip','$country')";
+        $result = mysqli_query($con, $query);
+
+        if ($result) {
+            try {
+                $query = "UPDATE product 
+                            SET quantity=quantity-1
+                            WHERE id = '$product_id';";
+                $result = mysqli_query($con, $query);
+
+                if ($result) {
+                    header("location: my_orders.php");
+                }
+            } catch (mysqli_sql_exception $e) {
+                var_dump($e);
+                exit;
             }
         }
     }

@@ -181,4 +181,26 @@ class Product
             header("location: admin_products.php");
         }
     }
+
+    public function mostSoldProduct()
+    {
+        $db = new Database();
+        $con = $db->connect_db();
+
+        $query = "SELECT COUNT(product_order.id) as con,product_order.product_id,product.name,product.photo AS photo
+                    FROM `product_order`
+                    JOIN product
+                    ON product_order.product_id = product.id
+                    GROUP BY product_order.product_id
+                    ORDER BY con DESC";
+
+        $result = mysqli_query($con, $query);
+
+        if($result){
+            $row = mysqli_fetch_assoc($result);
+            return $row;
+        }else{
+            echo "Error finding most sold product";
+        }
+    }
 }

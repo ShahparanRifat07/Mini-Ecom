@@ -36,6 +36,7 @@ $category_name = $category['title'];
 
 
 $user = new User();
+$is_bought = $user->checkIfProductBoughtByUser($product_id, $id);
 $is_admin = $user->checkIFAdmin($id);
 
 
@@ -215,7 +216,7 @@ $is_admin = $user->checkIFAdmin($id);
 
                     <div class="ms-5 mt-5">
                         <a class="btn btn-light btnW" href="">Add to wishlist</a>
-                        <a class="btn btn-dark btnW ms-2" href=""> Buy Now</a>
+                        <a class="btn btn-dark btnW ms-2" href="product_checkout.php?product_id=<?php echo $product_id  ?>&user_id=<?php echo $id ?>"> Buy Now</a>
                     </div>
                 </div>
 
@@ -239,7 +240,7 @@ $is_admin = $user->checkIFAdmin($id);
                         <a class="btn btn-dark text-warning centerB" href="">Change Picture</a>
                     </div>
                     <div class="col-md-4">
-                        <a class="btn btn-dark text-warning centerB" href="">Update Product</a>
+                        <a class="btn btn-dark text-warning centerB" href="update_product.php?product_id=<?php echo $product_id?>">Update Product</a>
                     </div>
                     <div class="col-md-4">
                         <a class="btn btn-dark text-danger centerB" href="">Delete Product</a>
@@ -278,29 +279,37 @@ $is_admin = $user->checkIFAdmin($id);
         <div class="row  mt-3 mb-3">
             <div class="col-md-3">
                 <div class="card">
-                    <form class="modal-rating">
-                        <div class="overlay"></div>
-                        <i class="fa-solid fa-star"></i>
-                        <h2>Rate This Product</h2>
-                        <div class="rating">
-                            <input type="radio" name="rate" id="rate-1" value="1" required>
-                            <label for="rate-1">1</label>
 
-                            <input type="radio" name="rate" id="rate-2" value="2" required>
-                            <label for="rate-2">2</label>
+                    <?php if ($is_bought == True) { ?>
 
-                            <input type="radio" name="rate" id="rate-3" value="3" required>
-                            <label for="rate-3">3</label>
+                        <form class="modal-rating">
+                            <div class="overlay"></div>
+                            <i class="fa-solid fa-star"></i>
+                            <h2>Rate This Product</h2>
+                            <div class="rating">
+                                <input type="radio" name="rate" id="rate-1" value="1" required>
+                                <label for="rate-1">1</label>
 
-                            <input type="radio" name="rate" id="rate-4" value="4" required>
-                            <label for="rate-4">4</label>
+                                <input type="radio" name="rate" id="rate-2" value="2" required>
+                                <label for="rate-2">2</label>
 
-                            <input type="radio" name="rate" id="rate-5" value="5" required>
-                            <label for="rate-5">5</label>
+                                <input type="radio" name="rate" id="rate-3" value="3" required>
+                                <label for="rate-3">3</label>
 
-                        </div>
-                        <button type="submit">Rate</button>
-                    </form>
+                                <input type="radio" name="rate" id="rate-4" value="4" required>
+                                <label for="rate-4">4</label>
+
+                                <input type="radio" name="rate" id="rate-5" value="5" required>
+                                <label for="rate-5">5</label>
+
+                            </div>
+                            <button type="submit">Rate</button>
+                        </form>
+
+                    <?php
+                    }
+                    ?>
+
 
                 </div>
             </div>
@@ -314,7 +323,7 @@ $is_admin = $user->checkIFAdmin($id);
                         </div>
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-dark btn-block">Post</button>
+                        <button type="submit" class="btn btn-dark btn-block" <?php if ($is_bought == false) { ?> disabled <?php } ?>>Post</button>
                     </form>
                 </div>
 
