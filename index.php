@@ -170,7 +170,7 @@ $user = new User();
         <!-- <p>Newly arrived prtodu</p> -->
 
         <div class="card mb-3">
-            <h4>Newly Arrived</h4>
+            <h4>Just Arrived</h4>
 
             <div class="row">
                 <?php

@@ -138,7 +138,7 @@ if ($admin->is_admin($id) == false) {
 
     <script>
         function wannaDelete() {
-            alert("Do you want to Delete this product?");
+            confirm("Do you want to Delete this product?");
         }
     </script>
 

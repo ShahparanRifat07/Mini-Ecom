@@ -80,8 +80,8 @@ if ($admin->is_admin($id) == false) {
         <div class="card bg-dark mt-3 mb-3">
             <ul>
                 <a class="text-light" href="admin_dashboard.php">Dashboard</a>
-                <a class="text-warning" href="admin_orders.php">Orders</a>
-                <a class="text-light" href="admin_out_for_delivery.php">Out for Delivery</a>
+                <a class="text-light" href="admin_orders.php">Orders</a>
+                <a class="text-warning" href="admin_out_for_delivery.php">Out for Delivery</a>
                 <a class="text-light" href="admin_delivery.php">Delivered</a>
             </ul>
         </div>
@@ -94,7 +94,7 @@ if ($admin->is_admin($id) == false) {
                     <th>Shipping Address</th>
                     <th>Transaction ID</th>
                     <th>Ordered Date</th>
-                    <th>Shipped</th>
+                    <th>Delivered</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,7 +106,7 @@ if ($admin->is_admin($id) == false) {
                             ON product_order.product_id = p.id
                             JOIN user as u
                             ON product_order.user_id = u.id
-                            WHERE product_order.on_process = 0 AND product_order.delivered = 0
+                            WHERE product_order.on_process = 1 AND product_order.delivered = 0
                             ORDER BY created_time DESC";
 
                 $cat = new Category();
@@ -144,7 +144,7 @@ if ($admin->is_admin($id) == false) {
                                 <p class="fw-normal mb-1"><?php echo $row['created_time'] ?> </p>
                             </td>
                             <td>
-                                <a onclick="wannaDelete()" class="btn btn-warning btn-sm btn-rounded" href="product_shippment.php?order_id=<?php echo $row['id'] ?>">confirm</a>
+                                <a onclick="wannaDelete()" class="btn btn-danger btn-sm btn-rounded" href="product_delivered.php?order_id=<?php echo $row['id'] ?>">Confirm</a>
                             </td>
                         </tr>
 

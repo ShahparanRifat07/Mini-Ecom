@@ -15,11 +15,6 @@ if ($admin->is_admin($id) == false) {
     header("location: no_access.php");
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $product = new Product();
-    $_POST['id'] = $_SESSION['USERID'];
-    $product->addProduct($_POST, $_FILES);
-}
 
 $product_id = "";
 if (isset($_GET['product_id'])) {

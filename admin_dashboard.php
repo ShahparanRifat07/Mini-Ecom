@@ -84,12 +84,9 @@ $most_sold = $pro->mostSoldProduct();
         <div class="card bg-dark mt-3 mb-3">
             <ul>
                 <a class="text-warning" href="admin_dashboard.php">Dashboard</a>
-                <!-- <a class="text-light" href="">Learner</a> -->
                 <a class="text-light" href="admin_orders.php">Orders</a>
-                <!-- <a class="text-light" href="">Instructor</a> -->
-                <!-- <a class="text-light" href="">Employer</a> -->
-                <a class="text-light" href="">On Process</a>
-                <a class="text-light" href="">Delivered</a>
+                <a class="text-light" href="admin_out_for_delivery.php">Out for Delivery</a>
+                <a class="text-light" href="admin_delivery.php">Delivered</a>
             </ul>
         </div>
 
@@ -104,12 +101,12 @@ $most_sold = $pro->mostSoldProduct();
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <h5>Total Revenue</h5>
-                        <h2>100</h2>
+                        <h2>$<?php echo $admin->findTotalRevenue() ?></h2>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <h5>Total Sold Products</h5>
+                        <h5>Total Orders</h5>
                         <h2>300</h2>
                     </div>
                 </div>
@@ -127,7 +124,7 @@ $most_sold = $pro->mostSoldProduct();
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="card bg-dark text-light">
-                        <h5>Product in Process</h5>
+                        <h5>Total Sold Product</h5>
                         <h2>300</h2>
                     </div>
                 </div>

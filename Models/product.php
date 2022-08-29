@@ -3,6 +3,43 @@
 
 class Product
 {
+
+
+
+    public function updateProduct($data)
+    {
+
+        $db = new Database();
+        $con = $db->connect_db();
+
+        $product_id = $data['product_id'];
+        $title = $data['title'];
+        $des = $data['description'];
+        $description = trim($des);
+        $category = $data['category'];
+        $price = $data['price'];
+        $quantity = $data['quantity'];
+
+        if (isset($data["submit"])) {
+            $db = new Database();
+            $con = $db->connect_db();
+
+            try {
+                $query = "UPDATE product SET name = '$title',description = '$description',category_id='$category',price= '$price', quantity='$quantity' WHERE id = $product_id";
+
+                if ($db->save($query) == true) {
+                    header("location: product_detail.php?product_id=$product_id");
+                }
+            } catch (mysqli_sql_exception $e) {
+                var_dump($e);
+                exit;
+            }
+        } else {
+            echo "Error Rise While Update";
+        }
+    }
+
+
     function valid($data, $file)
     {
         $id = $data['id'];
@@ -91,7 +128,7 @@ class Product
                         $error = "Something went wrong";
                         return $error;
                     }
-                    header("location: admin_dashboard.php");
+                    header("location: admin_products.php");
                 } catch (mysqli_sql_exception $e) {
                     var_dump($e);
                     exit;
@@ -123,38 +160,7 @@ class Product
         }
     }
 
-    public function updateProduct($data)
-    {
-
-        $db = new Database();
-        $con = $db->connect_db();
-
-        $product_id = $data['product_id'];
-        $title = $data['title'];
-        $des = $data['description'];
-        $description = trim($des);
-        $category = $data['category'];
-        $price = $data['price'];
-        $quantity = $data['quantity'];
-
-        if (isset($data["submit"])) {
-            $db = new Database();
-            $con = $db->connect_db();
-
-            try {
-                $query = "UPDATE product SET name = '$title',description = '$description',category_id='$category',price= '$price', quantity='$quantity' WHERE id = $product_id";
-
-                if ($db->save($query) == true) {
-                    header("location: admin_products.php");
-                }
-            } catch (mysqli_sql_exception $e) {
-                var_dump($e);
-                exit;
-            }
-        } else {
-            echo "Error Rise While Update";
-        }
-    }
+    
 
 
 
@@ -196,11 +202,67 @@ class Product
 
         $result = mysqli_query($con, $query);
 
-        if($result){
+        if ($result) {
             $row = mysqli_fetch_assoc($result);
             return $row;
-        }else{
+        } else {
             echo "Error finding most sold product";
         }
     }
+
+
+    public function checkIfOrderExists($order_id)
+    {
+
+        $db = new Database();
+        $con = $db->connect_db();
+
+        $query = "SELECT * FROM product_order WHERE id='$order_id' AND on_process=0 AND delivered=0";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function moveOrderToProcess($order_id)
+    {
+        $db = new Database();
+        $con = $db->connect_db();
+
+        try {
+            $query = "UPDATE product_order SET on_process = 1 WHERE id = $order_id";
+
+            if ($db->save($query) == true) {
+                header("location: admin_orders.php");
+            }
+        } catch (mysqli_sql_exception $e) {
+            var_dump($e);
+            exit;
+        }
+    }
+
+
+    public function moveOrderToDelivered($order_id)
+    {
+        $db = new Database();
+        $con = $db->connect_db();
+
+        try {
+            $query = "UPDATE product_order SET on_process = 0, delivered = 1 WHERE id = $order_id";
+
+            if ($db->save($query) == true) {
+                header("location: admin_out_for_delivery.php");
+            }
+        } catch (mysqli_sql_exception $e) {
+            var_dump($e);
+            exit;
+        }
+    }
+
+
+    
 }
