@@ -1,0 +1,162 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 27, 2022 at 02:52 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `min_ecom`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `photo` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `title`, `description`, `photo`) VALUES
+(4, 'Smartphone', 'A mobile phone, cellular phone, cell phone, cellphone, handphone, hand phone or pocket phone, sometimes shortened to simply mobile, cell, or just phone, is a portable telephone that can make and receive calls over a radio frequency link while the user is moving within a telephone service area', 'uploads/phonePhone16615281812853362796308e87548e6c.jpg'),
+(5, 'Watch', 'Watches are cool', 'uploads/watchesWatch16615282352407248816308e8abd150b.jpg'),
+(6, 'Laptop', 'A laptop, laptop computer, or notebook computer is a small, portable personal computer with a screen and alphanumeric keyboard.', 'uploads/laptopLaptop16615282714102516806308e8cf4eb04.jpg'),
+(7, 'Headphone ', 'Headphones are cool', 'uploads/headphoneHeadphone 16615428311556744448630921af6991d.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `description` varchar(1024) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `price` varchar(9) NOT NULL,
+  `quantity` varchar(9) NOT NULL,
+  `photo` varchar(256) NOT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `description`, `category_id`, `price`, `quantity`, `photo`, `created_time`) VALUES
+(1, 'Samsung Galaxy S22 Ultra', 'Upgrade to a new phone by buying the Samsung Galaxy S22 Ultra 5G that is available at the best prices online on Gadgets Now. Launched on February 9, 2022 (Official) in India, the mobile is available with striking features and adequate specifications at an introductory price of Rs 71,564.', 4, '700', '200', 'uploads_product/S22_Ultra_Greeen_UntitledSamsung Galaxy S22 Ultra166153349211854997496308fd3411de9.jpg', '2022-08-26 17:04:52'),
+(3, 'Skullcandy Hesh Evo Wireless Headphones', 'WIRELESS SIMPLICITY WITH SUPERIOR SOUND.WIRELESS SIMPLICITY WITH SUPERIOR SOUND. With powerful 40mm drivers and exceptional acoustics, Hesh Evo features audio quality that has been refined over four generations of constant improvement.', 7, '150', '40', 'uploads_product/product_headphoneSkullcandy Hesh Evo1661545300153750145063092b5480e67.jpg', '2022-08-26 20:21:40'),
+(6, 'MacBook Air (2022)', 'The M2 chip starts the next generation of Apple silicon, with even more of the speed and power efficiency of M1. So you can get more done faster with a more powerful 8‑core CPU. Create captivating images and animations with up to a 10-core GPU. Work with more streams of 4K and 8K ProRes video with the high‑performance media engine. And keep working — or playing — all day and into the night with up to 18 hours of battery life.2', 6, '1200', '20', 'uploads_product/MacbookMacBook Air (2022)1661559204673574046630961a452d45.jpg', '2022-08-27 00:13:24');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(64) NOT NULL,
+  `last_name` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `street` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `zip_code` varchar(16) NOT NULL,
+  `country` varchar(64) NOT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_loggedin` tinyint(1) NOT NULL DEFAULT 0,
+  `profile_pic` varchar(128) NOT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `street`, `city`, `zip_code`, `country`, `created_time`, `is_loggedin`, `profile_pic`, `is_admin`) VALUES
+(1, 'Shahparan', 'Rifat', 'rifat@gmail.com', '01911467735', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Madhabdi', 'Dhaka', '1204', 'Bangladesh', '2022-08-24 22:56:34', 0, 'images/default.png', 1),
+(2, 'Hasan', 'Saon', 'saon@gmail.com', '01957483762', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'Bikrompur', 'Dhaka', '1212', 'Bangladesh', '2022-08-24 23:03:20', 1, 'images/default.png', 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `f1` (`category_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `f1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE SET NULL;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
